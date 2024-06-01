@@ -1,0 +1,6 @@
+# dependencies
+/node_modules
+/docker-compose.yml
+/logs/farms.log
+/.vscode/
+.env

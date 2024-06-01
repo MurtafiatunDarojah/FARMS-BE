@@ -1,0 +1,39 @@
+version: '3'
+services:
+  farmsapp:
+    image: 632050788576.dkr.ecr.ap-southeast-1.amazonaws.com/farms-staging:latest
+    container_name: farmsapp
+    restart: unless-stopped
+    networks: 
+      - farms-net
+  webserver:
+    image: nginx:mainline-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./web-root:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - ./certbot-etc:/etc/letsencrypt  
+      - ./certbot-var:/var/lib/letsencrypt
+      - ./dhparam:/etc/ssl/certs
+    depends_on:
+      - farmsapp
+    networks: 
+      - farms-net
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot-etc:/etc/letsencrypt
+      - ./certbot-var:/var/lib/letsencrypt
+      - ./web-root:/var/www/html
+    depends_on:
+      - webserver
+    command:  certonly --webroot --webroot-path=/var/www/html --email tupay.foxa@gmail.com --agree-tos --no-eff-email --force-renewal -d farms-ws-staging.brmapps.com
+    networks: 
+      - farms-net 
+networks: 
+    farms-net:

@@ -1,0 +1,47 @@
+{
+  "name": "farms-backend",
+  "version": "1.0.0",
+  "description": "Farms Backend",
+  "main": "server.js",
+  "scripts": {
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --testTimeout=5000",
+    "start": "pm2 start server.js -i max",
+    "dev": "nodemon server.js"
+  },
+  "author": "Mohamad Fazrin Fahlevi",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/msal-node": "^1.16.0",
+    "app-root-path": "^3.0.0",
+    "aws-sdk": "^2.1263.0",
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "buffer": "^6.0.3",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "express-fileupload": "^1.4.0",
+    "express-rate-limit": "^7.0.1",
+    "express-validator": "^6.14.2",
+    "helmet": "^7.0.0",
+    "jest": "^29.4.3",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
+    "mongoose": "^6.3.4",
+    "msal": "^1.4.17",
+    "node-schedule": "^2.1.0",
+    "nodemon": "^2.0.19",
+    "pm2": "^5.2.0",
+    "supertest": "^6.3.3",
+    "winston": "^3.8.1",
+    "xlsx": "^0.18.5",
+    "yahoo-finance2": "^2.4.5"
+  },
+  "devDependencies": {
+    "@prisma/client": "^5.3.1",
+    "i": "^0.3.7",
+    "npm": "^10.1.0",
+    "prisma": "^5.3.1"
+  }
+}

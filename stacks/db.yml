@@ -1,0 +1,63 @@
+version: '3'
+services:
+    farmsdb-1 :
+      image: mongo:latest
+      container_name: farmsdb-1
+      volumes:
+        - ./data/farmsdb-1:/data/db
+        - ./restore/farms_db_10_10_22:/data/restore/farms_db_10_10_22
+        - ./keyfile-farms/keyfile/keyfile.key:/data/keyfile.key
+      ports:
+        - 27017:27017
+      entrypoint:
+        - bash
+        - -c
+        - |
+            chmod 400 /data/keyfile.key
+            chown 999:999 /data/keyfile.key
+            exec docker-entrypoint.sh $$@     
+      command: "mongod --auth --keyFile /data/keyfile.key --replSet farms-cluster"
+      # pastikan --keyFile /data/keyfile.key adalah file key bukan folder.
+      networks:
+        - farms-staging_farms-net
+    farmsdb-2 :
+      image: mongo:latest
+      container_name: farmsdb-2
+      volumes:
+        - ./data/farmsdb-2:/data/db
+        - ./restore/farms_db_10_10_22:/data/restore/farms_db_10_10_22
+        - ./keyfile-farms/keyfile/keyfile.key:/data/keyfile.key
+      ports:
+        - 27018:27017
+      entrypoint:
+        - bash
+        - -c
+        - |
+            chmod 400 /data/keyfile.key
+            chown 999:999 /data/keyfile.key
+            exec docker-entrypoint.sh $$@
+      command: "mongod --auth --keyFile /data/keyfile.key --replSet farms-cluster"
+      networks:
+        - farms-staging_farms-net
+    farmsdb-3 :
+      image: mongo:latest
+      container_name: farmsdb-3
+      volumes:
+        - ./data/farmsdb-3:/data/db
+        - ./restore/farms_db_10_10_22:/data/restore/farms_db_10_10_22
+        - ./keyfile-farms/keyfile/keyfile.key:/data/keyfile.key
+      ports:
+        - 27019:27017
+      entrypoint:
+        - bash
+        - -c
+        - |
+            chmod 400 /data/keyfile.key
+            chown 999:999 /data/keyfile.key
+            exec docker-entrypoint.sh $$@
+      command: "mongod --auth --keyFile /data/keyfile.key --replSet farms-cluster"
+      networks:
+        - farms-staging_farms-net
+networks:
+  farms-staging_farms-net:
+    external: true

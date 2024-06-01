@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model t_hias {
+  id                                 Int      @id @default(autoincrement())
+  id_record                          String   @unique
+  number_phone                       String   @db.VarChar(20)
+  employee_id                        String   @db.VarChar(20)
+  reporter_name                      String   @db.VarChar(50)
+  report_date                        DateTime
+  position                           String   @db.VarChar(100)
+  department_division                String   @db.VarChar(50)
+  report_time                        DateTime
+  current_company                    String   @db.VarChar(50)
+  location                           String
+  information_category               String   @db.VarChar(100)
+  direct_cause                       String?  @db.VarChar(100)
+  category_suggestions               String
+  observation_results                String
+  immediate_corrective_actions       String
+  recommendations_improvement_inputs String
+  created_by                         String   @db.VarChar(20)
+  updated_by                         String   @db.VarChar(20)
+  createdAt                          DateTime @default(now())
+  updatedAt                          DateTime @updatedAt
+}
+  
+model m_hias_attachment {
+  id        Int    @id @default(autoincrement())
+  file_name String
+  file_url  String
+  id_record String
+}
